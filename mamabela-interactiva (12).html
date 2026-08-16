@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mamá Bela — Desayunos con sazón de casa, en Veracruz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Work+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#E4E4E1;
+    --cream-2:#E4E4E1;
+    --card:#F8F4EA;
+    --ink:#2A2E33;
+    --ink-soft:rgba(42,46,51,.64);
+    --terracotta:#E8C468;
+    --terracotta-soft:#F0DDA0;
+    --terracotta-wash: rgba(232,196,104,.16);
+    --pine:#4C555F;
+    --pine-soft:#76818C;
+    --pine-wash: rgba(76,85,95,.09);
+    --gold:#E8C468;
+    --line: rgba(42,46,51,.13);
+    --line-strong: rgba(42,46,51,.24);
+    --radius:18px;
+    --maxw:1200px;
+    --shadow: 0 20px 45px -22px rgba(42,46,51,.28);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth; background:#E4E4E1;}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important;}
+  }
+  body{
+    background:var(--cream);
+    color:var(--ink);
+    font-family:'Work Sans', sans-serif;
+    line-height:1.6;
+    overflow-x:hidden;
+  }
+  a{color:inherit; text-decoration:none;}
+  ul{list-style:none;}
+  h1,h2,h3,h4{font-family:'Fraunces', serif; font-weight:600; letter-spacing:-0.01em; color:var(--ink);}
+  em{font-style:italic; color:var(--terracotta);}
+  .mono{font-family:'IBM Plex Mono', monospace;}
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 28px;}
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:.72rem;
+    letter-spacing:.16em;
+    text-transform:uppercase;
+    color:var(--terracotta);
+    display:flex; align-items:center; gap:9px;
+    margin-bottom:14px;
+  }
+  .eyebrow::before{ content:''; width:22px; height:1.5px; background:var(--terracotta); }
+  .eyebrow.pine{ color:var(--pine); }
+  .eyebrow.pine::before{ background:var(--pine); }
+
+  :focus-visible{ outline:2px solid var(--terracotta); outline-offset:3px; border-radius:4px; }
+
+  section{ padding:96px 0; position:relative; }
+  .section-alt{ background:var(--cream-2); }
+  .section-head{ max-width:640px; margin-bottom:48px; }
+  .section-head h2{ font-size:clamp(1.8rem,3.2vw,2.6rem); }
+  .section-head p{ color:var(--ink-soft); margin-top:14px; font-size:1.03rem; }
+  .center{ text-align:center; margin-left:auto; margin-right:auto; }
+  .center .eyebrow{ justify-content:center; }
+  .center .eyebrow::before{ display:none; }
+
+  .reveal{ opacity:0; transform:translateY(24px); transition:opacity .65s ease, transform .65s ease; }
+  .reveal.in{ opacity:1; transform:translateY(0); }
+
+  /* wave divider */
+  .wave{ display:block; width:100%; height:60px; margin-top:-1px; }
+  .wave path{ fill:var(--cream-2); }
+  .wave.flip path{ fill:var(--cream); }
+
+  /* leaf texture */
+  .leaf-bg{
+    position:absolute; inset:0; pointer-events:none; opacity:.5; z-index:0;
+    background-image: radial-gradient(var(--line) 1px, transparent 1px);
+    background-size:26px 26px;
+    mask-image: linear-gradient(180deg, black, transparent 85%);
+  }
+
+  /* NAV */
+  header.nav{
+    position:sticky; top:0; z-index:60;
+    background: rgba(33,31,27,.92);
+    backdrop-filter: blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-inner{ display:flex; align-items:center; justify-content:space-between; padding:18px 28px; max-width:var(--maxw); margin:0 auto;}
+  .brand{ font-family:'Fraunces', serif; font-size:1.45rem; font-weight:600; color:var(--terracotta);}
+  .brand em{ color:var(--terracotta); }
+  .nav-links{ display:flex; gap:8px; font-size:.94rem; }
+  .nav-links a{
+    padding:9px 14px; border-radius:999px; color:var(--ink-soft);
+    transition:color .2s, background .2s;
+  }
+  .nav-links a.active, .nav-links a:hover{ color:var(--ink); background:var(--terracotta-wash); }
+  .btn{
+    display:inline-flex; align-items:center; gap:9px;
+    padding:12px 22px; border-radius:999px;
+    font-size:.9rem; font-weight:600; letter-spacing:.01em;
+    transition:transform .18s ease, box-shadow .18s ease, background .18s ease, color .18s;
+    border:1.5px solid transparent; white-space:nowrap; cursor:pointer;
+    font-family:'Work Sans', sans-serif;
+  }
+  .btn svg{ width:17px; height:17px; stroke:currentColor; stroke-width:2; fill:none; stroke-linecap:round; stroke-linejoin:round; }
+  .btn-primary{ background:var(--terracotta); color:#111; box-shadow:0 10px 24px -10px rgba(232,196,104,.4); }
+  .btn-primary:hover{ transform:translateY(-2px); background:var(--terracotta-soft); }
+  .btn-outline{ border-color:var(--line-strong); color:var(--ink); background:transparent; }
+  .btn-outline:hover{ border-color:var(--pine); color:var(--pine); transform:translateY(-2px); }
+  .btn-pine{ background:var(--ink); color:#111; box-shadow:0 10px 24px -10px rgba(248,244,234,.22); }
+  .btn-pine:hover{ transform:translateY(-2px); background:var(--pine-soft); }
+
+  .burger{
+    display:none; flex-direction:column; gap:5px; background:none; border:none; cursor:pointer; padding:6px;
+  }
+  .burger span{ width:22px; height:2px; background:var(--ink); border-radius:2px; transition:.25s; }
+  .burger.open span:nth-child(1){ transform:translateY(7px) rotate(45deg); }
+  .burger.open span:nth-child(2){ opacity:0; }
+  .burger.open span:nth-child(3){ transform:translateY(-7px) rotate(-45deg); }
+
+  /* HERO */
+  .hero{ padding:76px 0 40px; }
+  .hero-grid{ display:grid; grid-template-columns:1.1fr .9fr; gap:60px; align-items:center; }
+  h1.headline{ font-size:clamp(2.1rem, 4.2vw, 3.3rem); line-height:1.1; }
+  .lede{ margin:22px 0 30px; color:var(--ink-soft); font-size:1.06rem; max-width:52ch; }
+  .cta-row{ display:flex; gap:14px; flex-wrap:wrap; margin-bottom:32px; }
+  .rating-row{ display:flex; align-items:center; gap:12px; }
+  .stars{ color:var(--gold); letter-spacing:2px; font-size:1.05rem; }
+  .rating-num{ font-weight:700; font-size:1.05rem; }
+  .rating-sub{ color:var(--ink-soft); font-size:.85rem; }
+
+  /* Ticket card - signature */
+  .ticket{
+    background:var(--card);
+    border-radius:20px;
+    box-shadow:var(--shadow);
+    position:relative;
+    padding:30px 28px;
+    border:1px solid var(--line);
+  }
+  .ticket::before, .ticket::after{
+    content:''; position:absolute; width:26px; height:26px; background:var(--cream);
+    border-radius:50%; top:50%; transform:translateY(-50%);
+  }
+  .ticket::before{ left:-13px; }
+  .ticket::after{ right:-13px; }
+  .ticket-perf{
+    border-top:2px dashed var(--line-strong);
+    margin:22px 0; position:relative;
+  }
+  .ticket-head{ display:flex; justify-content:space-between; align-items:flex-start; }
+  .ticket-head .eyebrow{ margin-bottom:6px;}
+  .ticket-badge{
+    font-family:'IBM Plex Mono', monospace; font-size:.68rem; background:var(--pine-wash); color:var(--pine);
+    padding:5px 10px; border-radius:999px; font-weight:600;
+  }
+  .ticket-stat{ display:flex; align-items:baseline; gap:10px; margin-top:6px;}
+  .ticket-stat .num{ font-family:'Fraunces',serif; font-size:2.4rem; font-weight:600; }
+  .ticket-rows{ display:flex; flex-direction:column; gap:12px; }
+  .ticket-row{ display:flex; justify-content:space-between; font-size:.88rem; color:var(--ink-soft); }
+  .ticket-row b{ color:var(--ink); font-weight:600; }
+  .ticket-foot{ display:flex; gap:10px; margin-top:20px; }
+
+  /* PANELS */
+  .panels{ display:grid; grid-template-columns:1fr 1fr; gap:26px; }
+  .panel{
+    background:var(--card); border:1px solid var(--line); border-radius:var(--radius);
+    padding:34px; box-shadow:var(--shadow);
+    transition:transform .25s ease, box-shadow .25s ease;
+  }
+  .panel:hover{ transform:translateY(-4px); }
+  .panel-icon{
+    width:50px; height:50px; border-radius:14px; display:flex; align-items:center; justify-content:center;
+    margin-bottom:20px;
+  }
+  .panel.a .panel-icon{ background:var(--pine-wash); color:var(--pine); }
+  .panel.b .panel-icon{ background:var(--terracotta-wash); color:var(--terracotta); }
+  .panel-icon svg{ width:24px; height:24px; stroke:currentColor; stroke-width:1.7; fill:none; stroke-linecap:round; stroke-linejoin:round; }
+  .panel h3{ font-size:1.4rem; margin-bottom:10px;}
+  .panel > p{ color:var(--ink-soft); margin-bottom:18px; }
+  .check-list li{ display:flex; gap:10px; align-items:flex-start; padding:9px 0; border-top:1px solid var(--line); font-size:.93rem; color:var(--ink-soft);}
+  .check-list li:first-child{ border-top:none; }
+  .check-list svg{ flex:none; margin-top:3px; width:16px; height:16px; stroke-width:2.2; fill:none; stroke-linecap:round; stroke-linejoin:round; }
+  .panel.a .check-list svg{ stroke:var(--pine); }
+  .panel.b .check-list svg{ stroke:var(--terracotta); }
+
+  /* MENU tabs */
+  .menu-tabs{ display:flex; gap:10px; margin-bottom:36px; flex-wrap:wrap; }
+  .menu-tab{
+    padding:11px 20px; border-radius:999px; border:1.5px solid var(--line-strong);
+    background:var(--card); font-weight:600; font-size:.92rem; color:var(--ink-soft); cursor:pointer;
+    transition:.2s;
+  }
+  .menu-tab.active{ background:var(--terracotta); border-color:var(--terracotta); color:#111; }
+  .menu-tab:hover:not(.active){ border-color:var(--terracotta); color:var(--terracotta); }
+  .dish-panel{ display:none; }
+  .dish-panel.active{ display:block; }
+  .dish-grid{ display:grid; grid-template-columns:repeat(2, 1fr); gap:18px; }
+  .dish{
+    background:var(--card); border:1px solid var(--line); border-radius:14px;
+    padding:22px; transition:border-color .2s, transform .2s, box-shadow .2s;
+  }
+  .dish:hover{ border-color:var(--terracotta); transform:translateY(-3px); box-shadow:var(--shadow); }
+  .dish-top{ display:flex; justify-content:space-between; gap:16px; margin-bottom:8px; }
+  .dish-top h4{ font-size:1.03rem; font-weight:600; font-family:'Work Sans',sans-serif;}
+  .dish-price{ font-family:'IBM Plex Mono', monospace; color:var(--terracotta); font-weight:600; white-space:nowrap; }
+  .dish p{ font-size:.88rem; color:var(--ink-soft); }
+
+  .tag-cloud{ display:flex; flex-wrap:wrap; gap:10px; margin-top:8px; }
+  .tag-cloud span{
+    font-family:'IBM Plex Mono', monospace; font-size:.78rem; padding:9px 15px; border-radius:999px;
+    border:1px solid var(--line-strong); color:var(--ink-soft); transition:.2s; cursor:default;
+  }
+  .tag-cloud span:hover{ border-color:var(--pine); color:var(--pine); background:var(--pine-wash); }
+  .combo-note{ margin-top:22px; font-size:.9rem; color:var(--ink-soft); border-left:3px solid var(--terracotta); padding-left:16px; }
+
+  /* EXECUTIVE */
+  .execu{
+    border-radius:24px; padding:56px; position:relative; overflow:hidden;
+    background:var(--terracotta); color:#111;
+    display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:center;
+  }
+  .execu .eyebrow{ color:rgba(0,0,0,.62); }
+  .execu .eyebrow::before{ background:rgba(0,0,0,.62); }
+  .execu h3{ color:#111; font-size:1.9rem; margin-bottom:14px; }
+  .execu > div > p{ color:rgba(0,0,0,.72); margin-bottom:20px; }
+  .execu ul li{ display:flex; gap:10px; padding:10px 0; font-size:.94rem; color:rgba(0,0,0,.78); border-top:1px solid rgba(0,0,0,.16); }
+  .execu ul li:first-child{ border-top:none; }
+  .execu ul li svg{ width:16px; height:16px; stroke:#111; stroke-width:2.2; fill:none; flex:none; margin-top:3px; }
+  .execu-final{ margin-top:8px !important; color:#111 !important; font-weight:600; border-top:none !important; }
+
+  /* REVIEWS carousel */
+  .carousel{ position:relative; max-width:760px; margin:0 auto; }
+  .carousel-track{ overflow:hidden; }
+  .carousel-slides{ display:flex; transition:transform .5s cubic-bezier(.65,0,.35,1); }
+  .slide{ min-width:100%; padding:4px; }
+  .review{
+    background:var(--card); border:1px solid var(--line); border-radius:20px; padding:34px 36px;
+    position:relative; box-shadow:var(--shadow); text-align:center;
+  }
+  .review::before, .review::after{
+    content:''; position:absolute; width:24px; height:24px; background:var(--cream);
+    border-radius:50%; top:50%; transform:translateY(-50%);
+  }
+  .review::before{ left:-12px; } .review::after{ right:-12px; }
+  .review .stars{ margin-bottom:16px; justify-content:center; display:flex; }
+  .review p.body{ color:var(--ink); font-size:1.06rem; font-family:'Fraunces',serif; font-weight:500; margin-bottom:18px; line-height:1.5; }
+  .review .who{ font-family:'IBM Plex Mono', monospace; font-size:.78rem; color:var(--ink-soft); }
+  .review .who b{ color:var(--ink); font-family:'Work Sans',sans-serif; font-weight:600; }
+  .carousel-controls{ display:flex; justify-content:center; align-items:center; gap:22px; margin-top:28px; }
+  .car-btn{
+    width:42px; height:42px; border-radius:50%; border:1.5px solid var(--line-strong); background:var(--card);
+    display:flex; align-items:center; justify-content:center; cursor:pointer; transition:.2s;
+  }
+  .car-btn:hover{ border-color:var(--terracotta); color:var(--terracotta); }
+  .car-btn svg{ width:18px; height:18px; stroke:currentColor; stroke-width:2; fill:none; }
+  .dots{ display:flex; gap:9px; }
+  .dot{ width:8px; height:8px; border-radius:50%; background:var(--line-strong); cursor:pointer; transition:.2s; border:none; padding:0; }
+  .dot.active{ background:var(--terracotta); width:22px; border-radius:5px; }
+
+  /* AMBIENTE */
+  .amb-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:18px; }
+  .amb-card{
+    background:var(--card); border:1px solid var(--line); border-radius:16px; padding:28px; text-align:left;
+    transition:transform .2s, box-shadow .2s;
+  }
+  .amb-card:hover{ transform:translateY(-4px); box-shadow:var(--shadow); }
+  .amb-card .panel-icon{ background:var(--terracotta-wash); color:var(--terracotta); margin-bottom:18px; width:46px; height:46px; }
+  .amb-card:nth-child(even) .panel-icon{ background:var(--pine-wash); color:var(--pine); }
+  .amb-card h4{ font-size:1.04rem; margin-bottom:8px; }
+  .amb-card p{ font-size:.87rem; color:var(--ink-soft); }
+
+  /* CTA BAND */
+  .cta-band{
+    border-radius:28px; padding:72px 56px; text-align:center; position:relative; overflow:hidden;
+    background:#000000; color:#F8F4EA; border:1px solid var(--line-strong);
+  }
+  .cta-band .eyebrow{ color:var(--terracotta-soft); justify-content:center; }
+  .cta-band .eyebrow::before{ display:none; }
+  .cta-band h2{ color:#F8F4EA; font-size:clamp(1.8rem,3.6vw,2.7rem); max-width:22ch; margin:0 auto 18px; }
+  .cta-band p{ color:#D9CFC2; max-width:48ch; margin:0 auto; }
+  .cta-band-actions{ display:flex; justify-content:center; gap:16px; flex-wrap:wrap; margin-top:32px; }
+  .cta-band .btn-outline{ border-color:rgba(248,244,234,.35); color:#F8F4EA; }
+  .cta-band .btn-outline:hover{ border-color:var(--terracotta-soft); color:var(--terracotta-soft); }
+
+  /* FOOTER */
+  footer{ padding:70px 0 30px; background:var(--cream-2); border-top:1px solid var(--line); }
+  .foot-grid{ display:grid; grid-template-columns:1.3fr 1fr 1fr 1fr; gap:40px; margin-bottom:50px; }
+  .foot-col h5{ font-family:'IBM Plex Mono', monospace; font-size:.72rem; letter-spacing:.14em; text-transform:uppercase; color:var(--terracotta); margin-bottom:16px; }
+  .foot-col p, .foot-col a{ color:var(--ink-soft); font-size:.9rem; margin-bottom:7px; display:flex; align-items:center; gap:8px; }
+  .foot-col a:hover{ color:var(--ink); }
+  .foot-col a svg{ width:15px; height:15px; stroke:currentColor; stroke-width:2; fill:none; flex:none; }
+  .foot-brand p{ margin-top:14px; max-width:32ch; }
+  .foot-bottom{ display:flex; justify-content:space-between; align-items:center; padding-top:26px; border-top:1px solid var(--line); font-size:.82rem; color:var(--ink-soft); flex-wrap:wrap; gap:14px; }
+  .foot-nav{ display:flex; gap:20px; }
+
+  /* Floating WhatsApp FAB */
+  .fab{
+    position:fixed; right:26px; bottom:26px; z-index:70;
+    width:58px; height:58px; border-radius:50%; background:#25D366; color:#F8F4EA;
+    display:flex; align-items:center; justify-content:center; box-shadow:0 14px 30px -10px rgba(37,211,102,.6);
+    transition:transform .2s; border:none; cursor:pointer;
+  }
+  .fab:hover{ transform:scale(1.08); }
+  .fab svg{ width:28px; height:28px; fill:#F8F4EA; }
+
+  /* Back to top */
+  .totop{
+    position:fixed; right:26px; bottom:94px; z-index:70;
+    width:44px; height:44px; border-radius:50%; background:var(--terracotta); color:#111;
+    display:flex; align-items:center; justify-content:center; border:none; cursor:pointer;
+    opacity:0; pointer-events:none; transform:translateY(10px); transition:.25s;
+  }
+  .totop.show{ opacity:1; pointer-events:auto; transform:translateY(0); }
+  .totop svg{ width:18px; height:18px; stroke:#111; stroke-width:2.4; fill:none; }
+
+  @media (max-width:980px){
+    .nav-links{ display:none; position:absolute; top:100%; left:0; right:0; background:var(--cream); flex-direction:column; padding:14px 28px 22px; border-bottom:1px solid var(--line); gap:4px; }
+    .nav-links.open{ display:flex; }
+    .nav-links a{ padding:12px 14px; }
+    .burger{ display:flex; }
+    .hero-grid{ grid-template-columns:1fr; }
+    .panels{ grid-template-columns:1fr; }
+    .dish-grid{ grid-template-columns:1fr; }
+    .execu{ grid-template-columns:1fr; padding:38px; }
+    .amb-grid{ grid-template-columns:repeat(2,1fr); }
+    .foot-grid{ grid-template-columns:1fr 1fr; }
+  }
+  @media (max-width:560px){
+    .amb-grid{ grid-template-columns:1fr; }
+    .foot-grid{ grid-template-columns:1fr; }
+    .cta-band{ padding:46px 22px; }
+    .wrap{ padding:0 18px; }
+    .ticket::before,.ticket::after{ display:none; }
+    .review::before,.review::after{ display:none; }
+    .review{ padding:26px 22px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <div class="brand">Mamá <em>Bela</em></div>
+    <nav class="nav-links" id="navLinks">
+      <a href="#experiencia" data-nav>Experiencia</a>
+      <a href="#menu" data-nav>Menú</a>
+      <a href="#opiniones" data-nav>Opiniones</a>
+      <a href="#visita" data-nav>Visítanos</a>
+    </nav>
+    <div style="display:flex; align-items:center; gap:10px;">
+      <a class="btn btn-primary" href="#visita">Reservar mesa</a>
+      <button class="burger" id="burger" aria-label="Abrir menú" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="hero" id="experiencia">
+    <div class="wrap hero-grid">
+      <div class="reveal">
+        <div class="eyebrow">Cocina veracruzana · Lavado de autos</div>
+        <h1 class="headline">Mientras tu auto brilla como nuevo, <em>tú desayunas</em> como en casa de tu abuela.</h1>
+        <p class="lede">Un mismo lugar, dos tiempos que se atienden solos: el auto sale impecable y tú sales satisfecho, con el sazón de la Cuenca del Papaloapan y la Huasteca veracruzana en cada plato.</p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="https://wa.me/522291406714?text=Hola%2C%20quiero%20reservar%20una%20mesa%20en%20Mam%C3%A1%20Bela" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24"><path d="M20.5 3.5a11 11 0 0 0-17 13.3L2 22l5.3-1.4A11 11 0 0 0 20.5 3.5z"/><path d="M8.5 8.7c.3-1 1.2-.9 1.7 0 .4.7.7 1.1.4 1.6-.4.7-1 .7-.7 1.4.5 1.2 1.9 2.5 3.1 3 .7.3.7-.3 1.4-.7.5-.3.9 0 1.6.4.9.5 1 1.4 0 1.7-1.6.5-3.3-.2-5-1.6-1.5-1.2-2.7-2.8-3.3-4.4-.5-1.2-.3-1.1.8-1.4z"/></svg>
+            Reservar mesa
+          </a>
+          <a class="btn btn-outline" href="#menu">Ver el menú</a>
+        </div>
+        <div class="rating-row">
+          <span class="stars">★★★★★</span>
+          <span class="rating-num"><span id="ratingCounter">0</span>/5</span>
+          <span class="rating-sub">Cientos de reseñas de clientes que vuelven cada fin de semana</span>
+        </div>
+      </div>
+
+      <div class="ticket reveal">
+        <div class="ticket-head">
+          <div>
+            <div class="eyebrow pine">Boleto de bienvenida</div>
+            <div class="ticket-stat"><span class="num" id="reviewsCounter">0</span><span style="color:var(--ink-soft); font-size:.85rem;">reseñas 5★</span></div>
+          </div>
+          <span class="ticket-badge">Mesa lista</span>
+        </div>
+        <div class="ticket-perf"></div>
+        <div class="ticket-rows">
+          <div class="ticket-row"><span>Horario</span><b>Mar–Sáb 8–6 · Dom 8–4</b></div>
+          <div class="ticket-row"><span>Ubicación</span><b>Las Vegas II, Boca del Río</b></div>
+          <div class="ticket-row"><span>Especialidad</span><b>Desayunos con sazón de casa</b></div>
+        </div>
+        <div class="ticket-foot">
+          <a class="btn btn-pine" style="flex:1; justify-content:center;" href="https://www.google.com/maps/place/Restaurante+Mam%C3%A1+Bela/@19.1369582,-96.1324193,18.32z/data=!4m15!1m8!3m7!1s0x85c341738671ccd7:0x11d1d8a644c01533!2sR%C3%ADo+Tesechoac%C3%A1n,+Boca+del+R%C3%ADo,+94297+Veracruz,+Ver.!3b1!8m2!3d19.1406491!4d-96.133828!16s%2Fg%2F11q7zng08w!3m5!1s0x85c3419896b973d9:0xef46cd1469a799e5!8m2!3d19.1356216!4d-96.1323277!16s%2Fg%2F11sk0n08gs?entry=ttu&g_ep=EgoyMDI2MDgxMS4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.4"/></svg>
+            Cómo llegar
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <svg class="wave" viewBox="0 0 1200 60" preserveAspectRatio="none"><path d="M0,30 C300,70 900,-10 1200,30 L1200,60 L0,60 Z"/></svg>
+
+  <section class="section-alt">
+    <div class="wrap">
+      <div class="panels">
+        <div class="panel a reveal">
+          <div class="panel-icon"><svg viewBox="0 0 24 24"><path d="M3 13l1.6-4.8A2 2 0 0 1 6.5 7h11a2 2 0 0 1 1.9 1.2L21 13"/><path d="M3 13h18v4a1 1 0 0 1-1 1h-1v1a1 1 0 0 1-1 1h-1a1 1 0 0 1-1-1v-1H8v1a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1v-1H4a1 1 0 0 1-1-1z"/></svg></div>
+          <div class="eyebrow pine">Mientras tanto</div>
+          <h3>Tu auto, en buenas manos</h3>
+          <p>Lo dejas en la entrada y te olvidas de él. Nuestro equipo lo lava con calma, sin apuros de reloj, mientras tú te sientas a la mesa.</p>
+          <ul class="check-list">
+            <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Lavado completo mientras desayunas o comes</li>
+            <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Boleto de servicio para que no pienses en nada más</li>
+            <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Tiempo de entrega pensado para acompañar tu comida, no para apurarla</li>
+          </ul>
+        </div>
+
+        <div class="panel b reveal">
+          <div class="panel-icon"><svg viewBox="0 0 24 24"><path d="M6 3v7a3 3 0 0 0 3 3v8"/><path d="M6 3v6M10 3v6"/><path d="M18 3c-1.5 1.5-2 3-2 5.5 0 2 1 3 2 3.5V21"/></svg></div>
+          <div class="eyebrow">De este lado</div>
+          <h3>Tu mesa, servida con cariño</h3>
+          <p>Salón climatizado, decoración cuidada al detalle y buena música de fondo. Nada de prisa: cada plato sale con la porción y el sazón que se merece.</p>
+          <ul class="check-list">
+            <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Salón climatizado y decorado con cariño, no de paso</li>
+            <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Porciones generosas, precio justo</li>
+            <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Cocina de casa hecha por manos profesionales</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <svg class="wave flip" viewBox="0 0 1200 60" preserveAspectRatio="none"><path d="M0,30 C300,-10 900,70 1200,30 L1200,60 L0,60 Z"/></svg>
+
+  <section id="menu">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="eyebrow">La carta</div>
+        <h2>¡Comienza tu día con un desayuno <em>lleno de tradición!</em></h2>
+        <p>Donde cada bocado te conecta con nuestras raíces y te prepara para un día extraordinario.</p>
+      </div>
+
+      <div class="menu-tabs reveal">
+        <button class="menu-tab active" data-tab="casa">Desayunos de la casa</button>
+        <button class="menu-tab" data-tab="antojos">Antojos de la casa</button>
+      </div>
+
+      <div class="dish-panel active reveal" id="tab-casa">
+        <div class="dish-grid">
+          <div class="dish">
+            <div class="dish-top"><h4>Desayuno Continental · 3 piezas</h4><span class="dish-price">$160</span></div>
+            <p>Hot cakes con miel de campo y mantequilla.</p>
+          </div>
+          <div class="dish">
+            <div class="dish-top"><h4>Desayuno de Autor</h4><span class="dish-price">$150</span></div>
+            <p>Cazuelita con chile huevillo, una picadita, una empanada de queso y una gordita.</p>
+          </div>
+          <div class="dish">
+            <div class="dish-top"><h4>Desayuno Veracruzano · 3 piezas</h4><span class="dish-price">$145</span></div>
+            <p>Picadas mixtas o empanadas de queso, pollo o picadillo.</p>
+          </div>
+          <div class="dish">
+            <div class="dish-top"><h4>Desayuno del Campo</h4><span class="dish-price">$140</span></div>
+            <p>Huevos al gusto (estrellados, revueltos u omelette), acompañados de frijolitos de noche.</p>
+          </div>
+          <div class="dish">
+            <div class="dish-top"><h4>Desayuno Fit · 4 piezas · 250 kcal</h4><span class="dish-price">$140</span></div>
+            <p>Claras de huevo revueltas al gusto u omelette, con mix de vegetales verdes, vinagreta de oliva y sal del Himalaya.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="dish-panel" id="tab-antojos">
+        <div class="dish-grid">
+          <div class="dish">
+            <div class="dish-top"><h4>Enchiladas de Betito · 4 piezas</h4><span class="dish-price">$150</span></div>
+            <p>Salsa ranchera, verde, morita, frijol, mole o bacon con manteca; con bistec asado, pechuga de pollo, cecina de Yecapixtla, chuleta ahumada, huevo revuelto natural, queso de rancho, pollo o picadillo.</p>
+          </div>
+          <div class="dish">
+            <div class="dish-top"><h4>Enfrijoladas de la Cuenca · 4 piezas</h4><span class="dish-price">$160</span></div>
+            <p>En salsa de frijol de noche con acento de hoja de aguacatillo, chorizo frito, queso fresco, crema de rancho, chiles toreados y cebolla morada. Con queso, pollo, huevo, picadillo o chicharrón.</p>
+          </div>
+          <div class="dish">
+            <div class="dish-top"><h4>Entomatadas · 4 piezas</h4><span class="dish-price">$140</span></div>
+            <p>Con pollo o huevo revuelto natural.</p>
+          </div>
+          <div class="dish">
+            <div class="dish-top"><h4>Empanadas Clásicas · 3 piezas</h4><span class="dish-price">$135</span></div>
+            <p>Queso, pollo o picadillo. 1 pieza — $45</p>
+          </div>
+          <div class="dish">
+            <div class="dish-top"><h4>Empanadas Embarcadero · 3 piezas · temporada</h4><span class="dish-price">$160</span></div>
+            <p>Jaiba o minilla, solo por temporada. 1 pieza — $55</p>
+          </div>
+          <div class="dish">
+            <div class="dish-top"><h4>Gorda Cordobesa</h4><span class="dish-price">$45</span></div>
+            <p>Rellena de frijol de noche refrito con acento de hoja de aguacatillo, coronada con quesito y crema de rancho.</p>
+          </div>
+          <div class="dish">
+            <div class="dish-top"><h4>Gorda Blanca o Negra</h4><span class="dish-price">desde $35</span></div>
+            <p>Sencilla $35 · con huevo frito o revuelto $60 · con pollo, chorizo o jamón $70 · con salsa de chicharrón $80.</p>
+          </div>
+          <div class="dish">
+            <div class="dish-top"><h4>Chilaquiles Xochimilco</h4><span class="dish-price">$130</span></div>
+            <p>Salsa verde, ranchera, tomate, morita o divorciados, con crema de rancho y quesito fresco. Con cecina, bistec, pollo, chuleta ahumada, huevo o picadillo — $150</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="reveal" style="margin-top:44px;">
+        <div class="eyebrow pine">Todos nuestros desayunos</div>
+        <div class="tag-cloud">
+          <span>Papanteco</span><span>De Autor</span><span>Del Campo</span><span>Continental</span>
+          <span>Veracruzano</span><span>Papaloapan</span><span>Fit</span><span>Huasteco</span>
+          <span>Arriero</span><span>Xochimilco</span>
+        </div>
+        <p class="combo-note">Tu paquete favorito incluye 2 tazas de café americano, jugo de la temporada (250 ml.) o fruta picada.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-alt">
+    <div class="wrap">
+      <div class="execu reveal">
+        <div>
+          <div class="eyebrow">Para tu jornada laboral</div>
+          <h3>Menú Ejecutivo</h3>
+          <p>Creado para brindarte una experiencia culinaria inigualable, perfecta para tus almuerzos durante la jornada laboral.</p>
+        </div>
+        <ul>
+          <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Platillos equilibrados y llenos de sabor</li>
+          <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Servicio ágil y eficiente</li>
+          <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Ingredientes frescos y de primera calidad</li>
+          <li class="execu-final">Ven a Mamá Bela y convierte cada comida en un momento especial.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="opiniones">
+    <div class="wrap">
+      <div class="section-head center reveal">
+        <div class="eyebrow">Boletos de opinión</div>
+        <h2>Lo que dicen quienes <em>ya nos visitaron</em></h2>
+      </div>
+
+      <div class="carousel reveal">
+        <div class="carousel-track">
+          <div class="carousel-slides" id="slides">
+            <div class="slide">
+              <div class="review">
+                <div class="stars">★★★★★</div>
+                <p class="body">Ambiente limpio y acogedor, buena música y una atención que está a la altura de la comida. Porciones, precio y calidad, justos.</p>
+                <div class="who"><b>Isa M.</b> · Local Guide</div>
+              </div>
+            </div>
+            <div class="slide">
+              <div class="review">
+                <div class="stars">★★★★★</div>
+                <p class="body">Lugar climatizado y decorado con cuidado. La comida le supo a casa de su abuela, y la relación precio-porción le pareció excelente.</p>
+                <div class="who"><b>Iván R.</b> · Cliente</div>
+              </div>
+            </div>
+            <div class="slide">
+              <div class="review">
+                <div class="stars">★★★★★</div>
+                <p class="body">Le encantó el concepto: mientras lavan el auto, desayunas algo delicioso. Lugar limpio, cómodo y con muy buena presentación.</p>
+                <div class="who"><b>Moisés F.</b> · Cliente</div>
+              </div>
+            </div>
+            <div class="slide">
+              <div class="review">
+                <div class="stars">★★★★★</div>
+                <p class="body">Un lugar entrañable, con un sazón que le recordó a la fusión de la Huasteca veracruzana, Boca del Río y el puerto. Todo un lujo.</p>
+                <div class="who"><b>Rocío D.</b> · Cliente</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="carousel-controls">
+          <button class="car-btn" id="prevBtn" aria-label="Reseña anterior"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></button>
+          <div class="dots" id="dots"></div>
+          <button class="car-btn" id="nextBtn" aria-label="Siguiente reseña"><svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-alt">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="eyebrow">El ambiente</div>
+        <h2>Detalles que <em>se notan</em></h2>
+      </div>
+      <div class="amb-grid">
+        <div class="amb-card reveal">
+          <div class="panel-icon"><svg viewBox="0 0 24 24"><path d="M12 2v20M4.5 6.5l15 11M19.5 6.5l-15 11"/></svg></div>
+          <h4>Climatizado</h4>
+          <p>Salón fresco todo el año, aun en pleno calor del puerto.</p>
+        </div>
+        <div class="amb-card reveal">
+          <div class="panel-icon"><svg viewBox="0 0 24 24"><path d="M12 3l2.5 5 5.5.7-4 3.8 1 5.5-5-2.7-5 2.7 1-5.5-4-3.8 5.5-.7z"/></svg></div>
+          <h4>Decoración cuidada</h4>
+          <p>Cada rincón pensado para sentirse como en casa, no como de paso.</p>
+        </div>
+        <div class="amb-card reveal">
+          <div class="panel-icon"><svg viewBox="0 0 24 24"><path d="M9 18V5l11-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="17" cy="16" r="3"/></svg></div>
+          <h4>Buena música</h4>
+          <p>El fondo justo para conversar sin gritar ni comer en silencio.</p>
+        </div>
+        <div class="amb-card reveal">
+          <div class="panel-icon"><svg viewBox="0 0 24 24"><path d="M5 3v18M19 3v18M5 8h14M5 16h14"/></svg></div>
+          <h4>Limpieza impecable</h4>
+          <p>De la mesa a la cocina, cuidada como si recibiéramos visita en casa.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="visita">
+    <div class="wrap">
+      <div class="cta-band reveal">
+        <div class="eyebrow">Te esperamos</div>
+        <h2>Trae el auto sucio. <em style="color:var(--terracotta-soft);">Sal con los dos relucientes.</em></h2>
+        <p>Reserva tu mesa y aprovecha para dejar el auto en buenas manos mientras desayunas o comes con calma.</p>
+        <div class="cta-band-actions">
+          <a class="btn btn-primary" href="https://wa.me/522291406714?text=Hola%2C%20quiero%20reservar%20una%20mesa%20en%20Mam%C3%A1%20Bela" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24"><path d="M20.5 3.5a11 11 0 0 0-17 13.3L2 22l5.3-1.4A11 11 0 0 0 20.5 3.5z"/></svg>
+            Reservar por WhatsApp
+          </a>
+          <a class="btn btn-outline" href="https://www.google.com/maps/place/Restaurante+Mam%C3%A1+Bela/@19.1369582,-96.1324193,18.32z/data=!4m15!1m8!3m7!1s0x85c341738671ccd7:0x11d1d8a644c01533!2sR%C3%ADo+Tesechoac%C3%A1n,+Boca+del+R%C3%ADo,+94297+Veracruz,+Ver.!3b1!8m2!3d19.1406491!4d-96.133828!16s%2Fg%2F11q7zng08w!3m5!1s0x85c3419896b973d9:0xef46cd1469a799e5!8m2!3d19.1356216!4d-96.1323277!16s%2Fg%2F11sk0n08gs?entry=ttu&g_ep=EgoyMDI2MDgxMS4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.4"/></svg>
+            Cómo llegar
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-col foot-brand">
+        <div class="brand">Mamá <em>Bela</em></div>
+        <p>Cocina veracruzana y lavado de autos en Boca del Río, Veracruz.</p>
+      </div>
+      <div class="foot-col">
+        <h5>Dirección</h5>
+        <a href="https://www.google.com/maps/place/Restaurante+Mam%C3%A1+Bela/@19.1369582,-96.1324193,18.32z/data=!4m15!1m8!3m7!1s0x85c341738671ccd7:0x11d1d8a644c01533!2sR%C3%ADo+Tesechoac%C3%A1n,+Boca+del+R%C3%ADo,+94297+Veracruz,+Ver.!3b1!8m2!3d19.1406491!4d-96.133828!16s%2Fg%2F11q7zng08w!3m5!1s0x85c3419896b973d9:0xef46cd1469a799e5!8m2!3d19.1356216!4d-96.1323277!16s%2Fg%2F11sk0n08gs?entry=ttu&g_ep=EgoyMDI2MDgxMS4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.4"/></svg>
+          Río Nilo 735, Las Vegas II, 94297 Veracruz
+        </a>
+      </div>
+      <div class="foot-col">
+        <h5>Horario</h5>
+        <p>Martes a sábado: 8:00 am – 6:00 pm</p>
+        <p>Domingo: 8:00 am – 4:00 pm</p>
+        <p>Lunes cerrado</p>
+      </div>
+      <div class="foot-col">
+        <h5>Contacto</h5>
+        <a href="https://wa.me/522291406714?text=Hola%2C%20quiero%20reservar%20una%20mesa%20en%20Mam%C3%A1%20Bela" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24"><path d="M20.5 3.5a11 11 0 0 0-17 13.3L2 22l5.3-1.4A11 11 0 0 0 20.5 3.5z"/></svg>
+          229 140 6714
+        </a>
+        <p>Reservaciones por WhatsApp</p>
+        <a href="https://www.instagram.com/mamabela_bocadelrio/" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg>
+          @mamábela_bocadelrío
+        </a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Mamá Bela · Cocina veracruzana y lavado de autos · Veracruz, Ver.</span>
+      <nav class="foot-nav">
+        <a href="#experiencia">Experiencia</a>
+        <a href="#menu">Menú</a>
+        <a href="#opiniones">Opiniones</a>
+        <a href="#visita">Visítanos</a>
+      </nav>
+    </div>
+  </div>
+</footer>
+
+<a class="fab" href="https://wa.me/522291406714?text=Hola%2C%20quiero%20reservar%20una%20mesa%20en%20Mam%C3%A1%20Bela" target="_blank" rel="noopener" aria-label="Reservar por WhatsApp">
+  <svg viewBox="0 0 24 24"><path d="M20.5 3.5a11 11 0 0 0-17 13.3L2 22l5.3-1.4A11 11 0 0 0 20.5 3.5z"/></svg>
+</a>
+<button class="totop" id="totop" aria-label="Volver arriba">
+  <svg viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+</button>
+
+<script>
+  // Mobile menu toggle
+  const burger = document.getElementById('burger');
+  const navLinks = document.getElementById('navLinks');
+  burger.addEventListener('click', () => {
+    const open = navLinks.classList.toggle('open');
+    burger.classList.toggle('open', open);
+    burger.setAttribute('aria-expanded', open);
+  });
+  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    navLinks.classList.remove('open'); burger.classList.remove('open');
+  }));
+
+  // Scrollspy
+  const navItems = document.querySelectorAll('[data-nav]');
+  const sections = ['experiencia','menu','opiniones','visita'].map(id => document.getElementById(id));
+  const spy = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if(e.isIntersecting){
+        navItems.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + e.target.id));
+      }
+    });
+  }, { rootMargin: '-40% 0px -50% 0px' });
+  sections.forEach(s => s && spy.observe(s));
+
+  // Reveal on scroll
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: .12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // Menu tabs
+  document.querySelectorAll('.menu-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.menu-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.dish-panel').forEach(p => p.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById('tab-' + tab.dataset.tab).classList.add('active');
+    });
+  });
+
+  // Reviews carousel
+  const slidesEl = document.getElementById('slides');
+  const slideCount = slidesEl.children.length;
+  let current = 0;
+  const dotsEl = document.getElementById('dots');
+  for(let i=0;i<slideCount;i++){
+    const d = document.createElement('button');
+    d.className = 'dot' + (i===0 ? ' active':'');
+    d.addEventListener('click', () => goTo(i));
+    dotsEl.appendChild(d);
+  }
+  function goTo(i){
+    current = (i + slideCount) % slideCount;
+    slidesEl.style.transform = `translateX(-${current * 100}%)`;
+    [...dotsEl.children].forEach((d,idx) => d.classList.toggle('active', idx===current));
+  }
+  document.getElementById('prevBtn').addEventListener('click', () => goTo(current - 1));
+  document.getElementById('nextBtn').addEventListener('click', () => goTo(current + 1));
+  let autoplay = setInterval(() => goTo(current + 1), 6000);
+  document.querySelector('.carousel').addEventListener('mouseenter', () => clearInterval(autoplay));
+  document.querySelector('.carousel').addEventListener('mouseleave', () => autoplay = setInterval(() => goTo(current + 1), 6000));
+
+  // Animated counters
+  function animateCounter(el, target, decimals){
+    let started = false;
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting && !started){
+          started = true;
+          let start = 0; const duration = 1200; const startTime = performance.now();
+          function tick(now){
+            const p = Math.min((now - startTime) / duration, 1);
+            const val = target * p;
+            el.textContent = decimals ? val.toFixed(1) : Math.round(val);
+            if(p < 1) requestAnimationFrame(tick);
+          }
+          requestAnimationFrame(tick);
+          obs.unobserve(el);
+        }
+      });
+    }, { threshold:.5 });
+    obs.observe(el);
+  }
+  animateCounter(document.getElementById('ratingCounter'), 4.8, true);
+  animateCounter(document.getElementById('reviewsCounter'), 320, false);
+
+  // Back to top
+  const totop = document.getElementById('totop');
+  window.addEventListener('scroll', () => {
+    totop.classList.toggle('show', window.scrollY > 600);
+  });
+  totop.addEventListener('click', () => window.scrollTo({ top:0, behavior:'smooth' }));
+</script>
+
+</body>
+</html>
